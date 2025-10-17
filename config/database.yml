@@ -30,8 +30,8 @@ production:
     encoding: unicode
     pool: 5
     
-    database: mysite_gkzb
-    username: mysite_gkzb_user
+    database: mysite_zqmi
+    username: mysite_zqmi_user
     password: <%= ENV['MYSITE_DATABASE_PASSWORD'] %>
     url: <%= ENV['DATABASE_URL'] %>
     

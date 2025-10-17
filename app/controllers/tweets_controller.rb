@@ -8,18 +8,21 @@ class TweetsController < ApplicationController
   end
 
   def create
-    @tweet = Tweet.new(message: params[:tweet][:message])
-    @tweet.user_id = 20
-
+    # ログインしているユーザーを取得
+    logged_in_user = User.find_by(uid: session[:login_uid])
+  
+    # Tweetに紐づけて作成
+    @tweet = Tweet.new(message: params[:tweet][:message], user: logged_in_user)
+  
     if @tweet.save
-      redirect_to tweets_path, notice: "ツイートを作成しました"
+      redirect_to tweets_path, notice: "投稿しました"
     else
       puts "保存失敗の理由:"
       puts @tweet.errors.full_messages
-      flash.now[:alert] = @tweet.errors.full_messages.join(", ")
-      render :new
+      render :new, status: 422
     end
   end
+
 
   def destroy
     tweet = Tweet.find(params[:id])
