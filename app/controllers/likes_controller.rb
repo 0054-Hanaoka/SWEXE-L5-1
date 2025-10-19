@@ -26,4 +26,15 @@ class LikesController < ApplicationController
 
     redirect_to root_path
   end
+  
+  before_action :check_login
+
+  private
+  
+  def check_login
+    unless session[:login_uid]
+      redirect_to top_main_path, alert: "ログインしてください"
+    end
+  end
+
 end
