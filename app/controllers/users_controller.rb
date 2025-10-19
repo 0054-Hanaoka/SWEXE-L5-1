@@ -30,4 +30,12 @@ class UsersController < ApplicationController
     u.destroy
     redirect_to users_path, notice: "ユーザーを削除しました"
   end
+  
+  before_action :require_login
+
+  def require_login
+    unless session[:login_uid]
+      redirect_to root_path, alert: "ログインしてください"
+    end
+  end
 end
