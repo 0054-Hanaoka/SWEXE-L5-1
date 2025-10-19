@@ -18,7 +18,8 @@
 <h2>ツイート一覧</h2>
 <% @tweets.each do |tweet| %>
   <div>
-    <p>投稿者: <%= tweet.user.uid %></p>
+    <p>投稿者: <%= tweet.user&.uid || "不明" %></p>
+
     <p>内容: <%= tweet.message %></p>
     <p>いいね数: <%= tweet.likes.count %></p>
 
