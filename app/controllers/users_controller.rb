@@ -1,7 +1,12 @@
 class UsersController < ApplicationController
   def index
+    if session[:login_uid]
+      @user = User.find_by(uid: session[:login_uid])
+      @profile = @user.profile
+    end
     @users = User.all
   end
+
 
   def new
     @user = User.new

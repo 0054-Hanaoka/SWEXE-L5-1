@@ -1,0 +1,9 @@
+<h2>プロフィール作成</h2>
+
+<%= form_with model: [@user, @profile] do |f| %>
+  <div>
+    <%= f.label :message, "ひとこと" %><br>
+    <%= f.text_area :message %>
+  </div>
+  <%= f.submit "作成" %>
+<% end %>

@@ -1,15 +1,29 @@
 class LikesController < ApplicationController
-    def create
-        tweet = Tweet.find(params[:tweet_id])
+    def index
+        # ログイン中ユーザーのいいね一覧を取得
         user = User.find_by(uid: session[:login_uid])
-        user.like_tweets << tweet
-        redirect_to root_path
+        @liked_tweets = user.like_tweets.includes(:user)
     end
 
-    def destroy
-        tweet = Tweet.find(params[:id])
-        user = User.find_by(uid: session[:login_uid])
-        tweet.likes.find_by(user_id: user.id).destroy
-        redirect_to root_path
+  def create
+    tweet = Tweet.find(params[:tweet_id])
+    user = User.find_by(uid: session[:login_uid])
+    user.like_tweets << tweet
+    redirect_to root_path
+  end
+
+  def destroy
+    tweet = Tweet.find(params[:id])
+    user = User.find_by(uid: session[:login_uid])
+    like = tweet.likes.find_by(user_id: user.id)
+
+    if like
+      like.destroy
+      flash[:notice] = "いいねを解除しました"
+    else
+      flash[:alert] = "いいねが存在しません"
     end
+
+    redirect_to root_path
+  end
 end

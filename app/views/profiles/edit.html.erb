@@ -1,0 +1,18 @@
+<h2>プロフィール編集</h2>
+
+<%= form_with(model: @user, url: user_profile_path(@user), method: :patch, local: true) do |f| %>
+  <h3>過去のツイート編集</h3>
+  <% @tweets.each do |tweet| %>
+    <div>
+      <%= f.fields_for :tweets, tweet do |tf| %>
+        <%= tf.hidden_field :id %> <!-- 更新対象のID -->
+        <%= tf.label :message, "メッセージ" %><br>
+        <%= tf.text_area :message %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= f.submit "更新" %>
+<% end %>
+
+<%= link_to "トップ画面", root_path %>

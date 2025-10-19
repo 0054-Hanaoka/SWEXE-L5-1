@@ -4,16 +4,29 @@
 <br>
 ログイン中UID：<%= session[:login_uid] %>
 
-<h2>ツイート一覧</h2>
+<% if session[:login_uid] %>
+  <p>こんにちは、<%= @user.uid %> さん！</p>
+  <% if @profile.present? %>
+    <%= link_to "プロフィール(過去の投稿)を見る", user_profile_path(@user) %>
+  <% else %>
+    <%= link_to "過去ツイート編集", edit_user_profile_path(@user) %>
+  <% end %>
 
-<% @tweets.each do |e| %>
-    <%= e.message %>
-    <%= e.like_tweets.count %>
-    <%= link_to '削除', tweet_path(e), data: {turbo_method: :delete} %>
-   
-    <% if session[:login_uid] %>
-        <%= link_to 'いいね', likes_path(tweet_id: e.id), data: { turbo_method: :post } %>
-        <%= link_to 'いいね削除', like_path(e), data: { turbo_method: :delete } %>
-    <% end %>
-<br>
+  <hr>
+<% end %>
+
+<h2>ツイート一覧</h2>
+<% @tweets.each do |tweet| %>
+  <div>
+    <p>投稿者: <%= tweet.user.uid %></p>
+    <p>内容: <%= tweet.message %></p>
+    <p>いいね数: <%= tweet.likes.count %></p>
+
+    <!-- いいね追加 -->
+    <%= button_to "いいね", likes_path(tweet_id: tweet.id), method: :post %>
+    
+    <!-- いいね削除 -->
+    <%= button_to "いいね削除", like_path(tweet.id), method: :delete, data: { confirm: "本当に解除しますか？" } %>
+
+  </div>
 <% end %>

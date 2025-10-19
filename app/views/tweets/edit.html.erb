@@ -1,0 +1,7 @@
+<h2>ツイート編集</h2>
+
+<%= form_with(model: @tweet, url: tweet_path(@tweet), method: :patch, local: true) do |f| %>
+  <%= f.text_area :message %>
+  <%= f.submit "更新" %>
+<% end %>
+

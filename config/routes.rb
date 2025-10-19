@@ -1,13 +1,18 @@
 Rails.application.routes.draw do
+  # トップ関連
   get  "top/main"
   post "top/login"
   get  "top/logout"
 
-  root "tweets#index"
+  # プロフィール関連（ここがポイント！）
+  resources :users do
+    resource :profile  # ← 単数形（1対1関係のとき）
+  end
 
-  resources :users
-
+  # つぶやき機能
   resources :tweets
-
   resources :likes
+
+  # ルート設定
+  root "tweets#index"
 end
