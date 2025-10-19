@@ -69,4 +69,5 @@ ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
 # Start server via Thruster by default, this can be overwritten at runtime
 EXPOSE 80
-CMD ["bash", "-c", "bundle exec rails db:schema:load && bundle exec rails db:seed && ./bin/thrust ./bin/rails server"]
+CMD ["bash", "-c", "DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rails db:schema:load && bundle exec rails db:seed && ./bin/thrust ./bin/rails server"]
+
