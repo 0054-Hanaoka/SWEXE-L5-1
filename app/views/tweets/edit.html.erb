@@ -1,14 +1,9 @@
-<h2>過去のツイート</h2>
-
-<% @user.tweets.each do |tweet| %>
-  <div style="margin-bottom: 1em;">
-    <p>
-      <strong>内容:</strong> <%= tweet.message %><br>
-        いいね数: <%= tweet.likes.count %>
-    </p>
-    <%= link_to "編集", edit_tweet_path(tweet) %>
-    <%= link_to "削除", tweet_path(tweet), method: :delete, data: { confirm: "本当に削除しますか？" } %>
-  </div>
+<%= form_with(model: @tweet, local: true) do |f| %>
+  <p>
+    <%= f.label :message %><br>
+    <%= f.text_area :message %>
+  </p>
+  <p>
+    <%= f.submit "更新" %>
+  </p>
 <% end %>
-
-<%= link_to "トップ画面", root_path %>

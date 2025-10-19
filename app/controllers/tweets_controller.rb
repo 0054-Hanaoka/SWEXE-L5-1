@@ -27,7 +27,8 @@ class TweetsController < ApplicationController
   end
 
   def edit
-    # @tweet は before_action でセットされる
+    @tweet = Tweet.find(params[:id])
+    @user = @tweet.user  # ← これで @user が nil でなくなる
   end
 
   def update
