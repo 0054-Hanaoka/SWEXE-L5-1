@@ -1,13 +1,11 @@
 class TweetsController < ApplicationController
-  # edit, update, destroy で共通して @tweet をセット
+  before_action :require_login, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_tweet, only: [:edit, :update, :destroy]
 
   def index
     @tweets = Tweet.all
-    if session[:login_uid]
-      @user = User.find_by(uid: session[:login_uid])
-      @profile = @user&.profile
-    end
+    @user = current_user
+    @profile = @user&.profile
   end
   
   def new
@@ -15,9 +13,7 @@ class TweetsController < ApplicationController
   end
 
   def create
-    logged_in_user = User.find_by(uid: session[:login_uid])
-    @tweet = Tweet.new(message: params[:tweet][:message], user: logged_in_user)
-
+    @tweet = current_user.tweets.new(tweet_params)  # current_user を使う
     if @tweet.save
       redirect_to tweets_path, notice: "投稿しました"
     else
@@ -27,8 +23,7 @@ class TweetsController < ApplicationController
   end
 
   def edit
-    @tweet = Tweet.find(params[:id])
-    @user = @tweet.user  # ← これで @user が nil でなくなる
+    @user = @tweet.user
   end
 
   def update
@@ -54,4 +49,3 @@ class TweetsController < ApplicationController
     params.require(:tweet).permit(:message)
   end
 end
-

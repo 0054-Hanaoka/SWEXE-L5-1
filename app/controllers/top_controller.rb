@@ -12,21 +12,15 @@ class TopController < ApplicationController
       render "login", status: 422
     end
   end
-  
   def main
-    if session[:login_uid]
-      @user = User.find_by(uid: session[:login_uid])
-      if @user
-        @profile = @user.profile
-        render "main"
-      else
-        session.delete(:login_uid)
-        redirect_to top_main_path, alert: "ユーザー情報が見つかりません"
-      end
+    if current_user
+      @profile = current_user.profile
+      render "main"
     else
       render "login"
     end
   end
+
 
 
   def logout
