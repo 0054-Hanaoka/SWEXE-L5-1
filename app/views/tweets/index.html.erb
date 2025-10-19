@@ -5,12 +5,15 @@
 ログイン中UID：<%= session[:login_uid] %>
 
 <% if session[:login_uid] %>
-  <p>こんにちは、<%= @user.uid %> さん！</p>
-  <% if @profile.present? %>
-    <%= link_to "プロフィール(過去の投稿)を見る", user_profile_path(@user) %>
-  <% else %>
-    <%= link_to "過去ツイート編集", edit_user_profile_path(@user) %>
+  <% if @user.present? %>
+    <p>こんにちは、<%= @user.uid %> さん！</p>
+    <% if @profile.present? %>
+      <%= link_to "プロフィール(過去の投稿)を見る", user_profile_path(@user) %>
+    <% else %>
+      <%= link_to "過去ツイート編集", edit_user_profile_path(@user) %>
+    <% end %>
   <% end %>
+
 
   <hr>
 <% end %>

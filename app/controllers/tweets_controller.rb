@@ -4,8 +4,11 @@ class TweetsController < ApplicationController
 
   def index
     @tweets = Tweet.all
-    @user = current_user
-    @profile = @user&.profile
+
+    if session[:login_uid].present?
+      @user = User.find_by(uid: session[:login_uid])
+      @profile = @user&.profile
+    end
   end
   
   def new
