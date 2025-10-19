@@ -47,4 +47,5 @@ ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 EXPOSE 80
 
 # CMD をシンプルに
-CMD ["./bin/start"]
+CMD ["/rails/bin/start"]
+

@@ -9,4 +9,3 @@ bundle exec rails db:seed
 
 echo "=== Start Rails server with Thruster ==="
 ./bin/thrust ./bin/rails server -b 0.0.0.0 -p 10000
-
