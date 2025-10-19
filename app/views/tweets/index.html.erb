@@ -30,7 +30,8 @@
     <%= button_to "いいね", likes_path(tweet_id: tweet.id), method: :post %>
     
     <!-- いいね削除 -->
-    <%= button_to "いいね削除", like_path(tweet.id), method: :delete, data: { confirm: "本当に解除しますか？" } %>
+    <%= button_to "いいね削除", destroy_likes_path(tweet_id: tweet.id), method: :delete, data: { confirm: "本当に解除しますか？" } %>
+
 
   </div>
 <% end %>
