@@ -42,6 +42,7 @@ class TweetsController < ApplicationController
     redirect_to tweets_path, notice: "ツイートを削除しました"
   end
 
+
   private
 
   def set_tweet
