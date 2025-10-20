@@ -12,8 +12,9 @@ Rails.application.routes.draw do
   # つぶやき機能
   resources :tweets
   resources :likes, only: [:create] do
-    delete 'destroy', on: :collection
+    delete '', action: :destroy, on: :collection
   end
+
 
 
   # ルート設定

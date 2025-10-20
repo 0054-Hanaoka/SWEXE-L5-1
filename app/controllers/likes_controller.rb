@@ -12,16 +12,10 @@ class LikesController < ApplicationController
     tweet = Tweet.find(params[:tweet_id])
     user = User.find_by(uid: session[:login_uid])
     like = tweet.likes.find_by(user_id: user.id)
-
-    if like
-      like.destroy
-      flash[:notice] = "いいねを解除しました"
-    else
-      flash[:alert] = "いいねが存在しません"
-    end
-
+    like.destroy if like
     redirect_to root_path
   end
+
 
   private
 
