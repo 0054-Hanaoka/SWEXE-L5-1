@@ -14,7 +14,6 @@
     <% end %>
   <% end %>
 
-
   <hr>
 <% end %>
 
@@ -22,17 +21,17 @@
 <% @tweets.each do |tweet| %>
   <div>
     <p>投稿者: <%= tweet.user&.uid || "不明" %></p>
-
     <p>内容: <%= tweet.message %></p>
     <p>いいね数: <%= tweet.likes.count %></p>
 
-    <!-- いいね追加 -->
-    <%= button_to "いいね", likes_path(tweet_id: tweet.id), method: :post %>
-    
-    <!-- いいね削除 -->
-    <%= button_to "いいね削除", likes_path(tweet_id: tweet.id), method: :delete, data: { confirm: "本当に解除しますか？" } %>
-
-
-
+    <% if @user.present? %>
+      <% if @user.like_tweets.include?(tweet) %>
+        <!-- すでにいいねしている場合：いいね削除ボタンを表示 -->
+        <%= button_to "いいね削除", likes_path(tweet_id: tweet.id), method: :delete, data: { confirm: "本当に解除しますか？" } %>
+      <% else %>
+        <!-- まだいいねしていない場合：いいねボタンを表示 -->
+        <%= button_to "いいね", likes_path(tweet_id: tweet.id), method: :post %>
+      <% end %>
+    <% end %>
   </div>
 <% end %>

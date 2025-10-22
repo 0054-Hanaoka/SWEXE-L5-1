@@ -2,9 +2,13 @@
   <%= f.label :uid, 'UID' %>
   <%= f.text_field :uid %>
 
-  <%= f.label :pass, 'PASS' %>
-  <%= f.password_field :pass %>
+  <%= f.label :password, 'PASS' %>
+  <%= f.password_field :password %>
+
+  <%= f.label :password_confirmation, 'PASS 確認' %>
+  <%= f.password_field :password_confirmation %>
 
   <%= f.submit '作成' %>
 <% end %>
-<%= link_to "戻る", :back %>
+
+<%= link_to "トップ画面", top_main_path %>

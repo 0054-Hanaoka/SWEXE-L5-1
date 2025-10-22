@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   has_many :tweets, dependent: :destroy
-  has_many :likes
+  has_many :likes, dependent: :destroy
   has_many :like_tweets, through: :likes, source: :tweet
 
   has_one :profile, dependent: :destroy
@@ -9,5 +9,8 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :tweets
 
   validates :uid, presence: true, uniqueness: true
-  validates :pass, presence: true
+  validates :password, presence: true
+
+  
+  has_secure_password
 end

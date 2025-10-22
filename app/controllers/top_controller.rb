@@ -1,10 +1,8 @@
 class TopController < ApplicationController
   def login
-    uid = params[:uid]
-    pass = params[:pass]
+    user = User.find_by(uid: params[:uid])
   
-    user = User.find_by(uid: uid)
-    if user && BCrypt::Password.new(user.pass) == pass
+    if user && user.authenticate(params[:pass])
       session[:login_uid] = user.uid
       redirect_to top_main_path
     else
@@ -12,6 +10,7 @@ class TopController < ApplicationController
       render "login", status: 422
     end
   end
+
   def main
     if current_user
       @profile = current_user.profile

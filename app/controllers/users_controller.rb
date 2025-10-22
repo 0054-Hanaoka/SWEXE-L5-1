@@ -15,18 +15,20 @@ class UsersController < ApplicationController
   end
 
   def create
-    uid = params[:user][:uid]
-    pass = params[:user][:pass]
-
-    @user = User.new(uid: uid, pass: BCrypt::Password.create(pass))
-
+    @user = User.new(
+      uid: params[:user][:uid],
+      password: params[:user][:password],
+      password_confirmation: params[:user][:password_confirmation]
+    )
+  
     if @user.save
-      session[:login_uid] = @user.uid  # 登録後に自動ログインさせる場合
+      session[:login_uid] = @user.uid  # 登録後に自動ログイン
       redirect_to users_path, notice: "ユーザーを作成しました"
     else
       render :new, status: 422
     end
   end
+
 
   def destroy
     u = User.find(params[:id])
